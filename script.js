@@ -2,19 +2,26 @@ const piedra = document.getElementById('piedra');
 const papel = document.getElementById('papel');
 const tijera = document.getElementById('tijera');
 const mensaje = document.getElementById('resultado');
-const emojiJugador = document.getElementById('eleccion-jugador')
-const emojiPc = document.getElementById('eleccion-pc')
-const contenedorVidasPc = document.getElementById('vidas-pc')
-const contenedorVidasJugador = document.getElementById('vidas-jugador')
-const mensajeFinal = document.getElementById('mensaje-final')
-const botonReiniciar = document.getElementById('reiniciar')
+const emojiJugador = document.getElementById('eleccion-jugador');
+const emojiPc = document.getElementById('eleccion-pc');
+const contenedorVidasPc = document.getElementById('vidas-pc');
+const contenedorVidasJugador = document.getElementById('vidas-jugador');
+const mensajeFinal = document.getElementById('mensaje-final');
+const botonReiniciar = document.getElementById('reiniciar');
+
+const vidaJ1 = document.getElementById('vida-j1');
+const vidaJ2 = document.getElementById('vida-j2');
+const vidaJ3 = document.getElementById('vida-j3');
+let vidasJugador = [vidaJ1, vidaJ2, vidaJ3];
+
+const vidaP1 = document.getElementById('vida-p1');
+const vidaP2 = document.getElementById('vida-p2');
+const vidaP3 = document.getElementById('vida-p3');
+let vidasPc = [vidaP1, vidaP2, vidaP3];
 
 let eleccionJugador;
 let eleccionMaquina;
 let resultado;
-
-let derrotasPc = 0;
-let derrotasJugador = 0;
 
 var elegirPiedra = function() {
     eleccionJugador = 'piedra';
@@ -76,19 +83,14 @@ function validar(eleccion) {
 
 function combate() {
     if(eleccionJugador == eleccionMaquina) {
-        resultado = '¡HA SIDO UN EMPATE!';
-        imprimirMensaje();
+        imprimirMensaje('¡HA SIDO UN EMPATE!');
     } else if (eleccionJugador == 'piedra' && eleccionMaquina == 'tijera') {
-        resultado = '¡HAS GANADO!';
         restarVidasPc();
     } else if (eleccionJugador == 'papel' && eleccionMaquina == 'piedra') {
-        resultado = '¡HAS GANADO!';
         restarVidasPc();
     } else if (eleccionJugador == 'tijera' && eleccionMaquina == 'papel') {
-        resultado = '¡HAS GANADO!';
         restarVidasPc();
     } else {
-        resultado = '¡HAS PERDIDO!';
         restarVidasJugador();
     }
 }
@@ -115,48 +117,34 @@ function combate() {
 // }
 
 function restarVidasPc() {
-    var restarVidaPc = document.createElement('p')
-    restarVidaPc.innerHTML = '❌';
-
-    contenedorVidasPc.appendChild(restarVidaPc);
-    derrotasPc++;
-    
-    imprimirMensaje();
-}
-
-function restarVidasJugador() {
-    var restarVidaJugador = document.createElement('p')
-    restarVidaJugador.innerHTML = '❌';
-
-    contenedorVidasJugador.appendChild(restarVidaJugador);
-    derrotasJugador++;
-    
-    imprimirMensaje();
-}
-
-function imprimirMensaje() {
-    mensaje.innerHTML = resultado;
-
-    validarDerrotas();
-}
-
-function validarDerrotas() {
-    if (derrotasPc == 3) {
-        mostrarMensajeFinal('¡BIEN HECHO HAS GANADO!');
-    } else if (derrotasJugador == 3) {
-        mostrarMensajeFinal('EL PC TE HA GANADO');
+    for(let i = 0; i < vidasPc.length; i++) {
+        if(vidasPc[i].innerText == '') {
+            vidasPc[i].innerHTML = '❌';
+            imprimirMensaje('¡HAS GANADO!');
+            return;
+        }
     }
 }
 
-function mostrarMensajeFinal(ganador) {
-    piedra.disabled = true;
-    papel.disabled = true;
-    tijera.disabled = true;
+function restarVidasJugador() {
+    for(let i = 0; i < vidasJugador.length; i++) {
+        if(vidasJugador[i].innerText == '') {
+            vidasJugador[i].innerHTML = '❌';
+            imprimirMensaje('¡HAS PERDIDO!');
+            return;
+        }
+    }
+}
 
-    mensaje.innerHTML = ganador;
-    mensajeFinal.style.display = 'block';
+function imprimirMensaje(resultado) {
+    mensaje.innerHTML = resultado;
 
-    botonReiniciar.addEventListener('click', reiniciarJuego)
+    
+    if(vidasJugador[2].innerText == '❌') {
+        mensajeFinal();
+    } else if(vidasPc[2].innerText == '❌') {
+        mensajeFinal();
+    }
 }
 
 function reiniciarJuego() {
