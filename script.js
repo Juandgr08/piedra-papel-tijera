@@ -1,6 +1,8 @@
+// variables de jugadas
 const piedra = document.getElementById('piedra');
 const papel = document.getElementById('papel');
 const tijera = document.getElementById('tijera');
+
 const mensaje = document.getElementById('resultado');
 const emojiJugador = document.getElementById('eleccion-jugador');
 const emojiPc = document.getElementById('eleccion-pc');
@@ -9,11 +11,13 @@ const contenedorVidasJugador = document.getElementById('vidas-jugador');
 const mensajeFinal = document.getElementById('mensaje-final');
 const botonReiniciar = document.getElementById('reiniciar');
 
+//variables vidas jugador
 const vidaJ1 = document.getElementById('vida-j1');
 const vidaJ2 = document.getElementById('vida-j2');
 const vidaJ3 = document.getElementById('vida-j3');
 let vidasJugador = [vidaJ1, vidaJ2, vidaJ3];
 
+//variables vidas pc
 const vidaP1 = document.getElementById('vida-p1');
 const vidaP2 = document.getElementById('vida-p2');
 const vidaP3 = document.getElementById('vida-p3');
