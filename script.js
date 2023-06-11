@@ -141,18 +141,28 @@ function imprimirMensaje(resultado) {
 
     
     if(vidasJugador[2].innerText == '❌') {
-        mensajeFinal();
+        mensajeGanador('EL PC TE HA GANADO');
     } else if(vidasPc[2].innerText == '❌') {
-        mensajeFinal();
+        mensajeGanador('FELICIDADES HAS GANADO');
     }
 }
 
-function reiniciarJuego() {
-    derrotasJugador = 0;
-    derrotasPc = 0;
+function mensajeGanador(ganador) {
+    piedra.disabled = true;
+    papel.disabled = true;
+    tijera.disabled = true;
 
-    contenedorVidasJugador.innerHTML = '';
-    contenedorVidasPc.innerHTML = '';
+    mensaje.innerHTML = ganador;
+    mensajeFinal.style.display = 'block';
+
+    botonReiniciar.addEventListener('click', reiniciarJuego)
+}
+
+function reiniciarJuego() {
+    for(let i = 0; i < 3; i++) {
+        vidasJugador[i].innerHTML = '';
+        vidasPc[i].innerHTML = '';
+    }
 
     emojiJugador.innerHTML = '';
     emojiPc.innerHTML = '';
